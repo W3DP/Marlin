@@ -56,7 +56,7 @@
   #define TEMP_1_PIN                    P0_25_A2  // A2 (T2) - (69) - TEMP_1_PIN
 #endif
 #ifndef TEMP_BED_PIN
-  #define TEMP_BED_PIN                  P0_23_A0  // A0 (T0) - (67) - TEMP_BED_PIN
+  #define TEMP_BED_PIN                  P0_23_A0  //E3SKR13 - Change from P0_23_A0 to P0_02_A7 to use AUX-1 for PT100 - A0 (T0) - (67) - TEMP_BED_PIN
 #endif
 
 #if HOTENDS == 1 && TEMP_SENSOR_PROBE
