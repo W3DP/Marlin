@@ -71,7 +71,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(W3DP, Ender-3 SKR 1.3 - v1.00)" //E3SKR13 - Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(W3DP, Ender-3 SKR 1.3 - v1.02)" //E3SKR13 - Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -415,7 +415,7 @@
  *   998 : Dummy Table that ALWAYS reads 25°C or the temperature defined below.
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
-#define TEMP_SENSOR_0 1 //E3SKR13 - Original thermistor
+#define TEMP_SENSOR_0 5 //E3SKR13 - Changed to 5. Original thermistor = 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -459,7 +459,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 275 //E3SKR13 - Change to 285 when V6 is installed
+#define HEATER_0_MAXTEMP 285 //E3SKR13 - Change to 285 when V6 is installed
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -491,6 +491,10 @@
   #define DEFAULT_Kp 20.65 //E3SKR13
   #define DEFAULT_Ki 1.86 //E3SKR13
   #define DEFAULT_Kd 57.20 //E3SKR13
+  // Creality Ender-3 Pro with V6 with stock thermistor
+  #define DEFAULT_Kp 33.00 //E3SKR13
+  #define DEFAULT_Ki 3.05 //E3SKR13
+  #define DEFAULT_Kd 89.15 //E3SKR13
 
   // Ultimaker
   //#define DEFAULT_Kp 22.2
@@ -751,7 +755,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 105 } //E3SKR13 - e-steps for Polymax PETG
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80.24, 80.37, 401.36, 103 } //E3SKR13 - e-steps for X3D PETG (Stock 80,80,400)
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -822,7 +826,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.08  // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -980,11 +984,11 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { -45, -12, 0 } //E3SKR13 - EZABL position for Hero Me with stock hot end
+#define NOZZLE_TO_PROBE_OFFSET { -58, -5, 0 } //E3SKR13 - EZABL position for Hero Me Gen 5 with V6. Hero Me with stock hot end -45, -12
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define MIN_PROBE_EDGE 30 //E3SKR13 - EZABL
+#define MIN_PROBE_EDGE 20 //E3SKR13 - EZABL
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000 //E3SKR13 - EZABL - Unchanged
@@ -1087,7 +1091,7 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR true //E3SKR13 - Reversed for TMC2208 - Direction to be confirmed
+#define INVERT_E0_DIR true //E3SKR13 - Reversed for TMC2208
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1123,7 +1127,7 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_250 //E3SKR13
+#define X_MAX_POS 250 //E3SKR13
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250 //E3SKR13 - To be determined
 
@@ -1324,7 +1328,7 @@
   //===========================================================================
 
   #define MESH_INSET 10          // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 3    // Don't use more than 7 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_X 5    // Don't use more than 7 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
@@ -1367,7 +1371,7 @@
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
 //#define MANUAL_X_HOME_POS 0
-//#define MANUAL_Y_HOME_POS 0
+#define MANUAL_Y_HOME_POS -9 //E3SKR13 - Y offset for Hero Me Gen 5 - TBC
 //#define MANUAL_Z_HOME_POS 0
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
@@ -1425,25 +1429,25 @@
  */
 //#define SKEW_CORRECTION
 
-#if ENABLED(SKEW_CORRECTION)
+#if ENABLED(SKEW_CORRECTION) //E3SKR13
   // Input all length measurements here:
-  #define XY_DIAG_AC 282.8427124746
-  #define XY_DIAG_BD 282.8427124746
-  #define XY_SIDE_AD 200
+  #define XY_DIAG_AC 282.8427124746 //E3SKR13 141.05 - unmodified = 282.8427124746
+  #define XY_DIAG_BD 282.8427124746 //E3SKR13 141.81 - unmodified = 282.8427124746
+  #define XY_SIDE_AD 200  //E3SKR13 99.99 - unmodified = 200
 
   // Or, set the default skew factors directly here
   // to override the above measurements:
-  #define XY_SKEW_FACTOR 0.0
+  //#define XY_SKEW_FACTOR 0.0  //E3SKR13 - Commented out
 
-  //#define SKEW_CORRECTION_FOR_Z
+  #define SKEW_CORRECTION_FOR_Z //E3SKR13
   #if ENABLED(SKEW_CORRECTION_FOR_Z)
-    #define XZ_DIAG_AC 282.8427124746
-    #define XZ_DIAG_BD 282.8427124746
-    #define YZ_DIAG_AC 282.8427124746
-    #define YZ_DIAG_BD 282.8427124746
-    #define YZ_SIDE_AD 200
-    #define XZ_SKEW_FACTOR 0.0
-    #define YZ_SKEW_FACTOR 0.0
+    #define XZ_DIAG_AC 282.8427124746 //E3SKR13 141.81 - unmodified = 282.8427124746
+    #define XZ_DIAG_BD 282.8427124746 //E3SKR13 141.22 - unmodified = 282.8427124746
+    #define YZ_DIAG_AC 282.8427124746 //E3SKR13 141.55 - unmodified = 282.8427124746
+    #define YZ_DIAG_BD 282.8427124746 //E3SKR13 141.55 - unmodified = 282.8427124746
+    #define YZ_SIDE_AD 200  //E3SKR13 100.16 - unmodified = 200
+    //#define XZ_SKEW_FACTOR 0.0  //E3SKR13 - Commented out
+    //#define YZ_SKEW_FACTOR 0.0  //E3SKR13 - Commented out
   #endif
 
   // Enable this option for M852 to set skew at runtime
