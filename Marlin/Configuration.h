@@ -121,7 +121,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000 //E3SKR13 - Left at 115200, try 250000 later
+#define BAUDRATE 250000 //E3SKR13
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -440,7 +440,7 @@
 #define TEMP_WINDOW              1  // (°C) Temperature proximity for the "temperature reached" timer
 #define TEMP_HYSTERESIS          3  // (°C) Temperature proximity considered "close enough" to the target
 
-#define TEMP_BED_RESIDENCY_TIME 10  // (seconds) Time to wait for bed to "settle" in M190
+#define TEMP_BED_RESIDENCY_TIME 20  // (seconds) Time to wait for bed to "settle" in M190
 #define TEMP_BED_WINDOW          1  // (°C) Temperature proximity for the "temperature reached" timer
 #define TEMP_BED_HYSTERESIS      3  // (°C) Temperature proximity considered "close enough" to the target
 
@@ -481,8 +481,8 @@
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
-  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  //#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+  #define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+  #define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
   //#define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
 
@@ -775,7 +775,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 500, 500, 100, 5000 }
+#define DEFAULT_MAX_ACCELERATION      { 2000, 2000, 100, 5000 } //E3SKR13 - Changed from 500,500,100,5000
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -790,9 +790,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          2000    //E3SKR13 - Changed from 500 - X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   500    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   2000    //E3SKR13 - Changed from 500 - X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -826,7 +826,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.08  // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.08  //E3SKR13 - To be tested further - (mm) Distance from real junction edge
 #endif
 
 /**
@@ -988,7 +988,7 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define MIN_PROBE_EDGE 20 //E3SKR13 - EZABL
+#define PROBING_MARGIN 20 //E3SKR13 - EZABL (previously MIN_PROBE_EDGE)
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000 //E3SKR13 - EZABL - Unchanged
@@ -1127,7 +1127,7 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 250 //E3SKR13
+#define X_MAX_POS 248 //E3SKR13
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250 //E3SKR13 - To be determined
 
@@ -1279,7 +1279,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3 //E3SKR13 - EZABL - Unchanged
+  #define GRID_MAX_POINTS_X 5 //E3SKR13 - EZABL
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X //E3SKR13 - EZABL - Unchanged
 
   // Probe along the Y axis, advancing X after each column
@@ -1295,7 +1295,7 @@
     // Experimental Subdivision of the grid by Catmull-Rom method.
     // Synthesizes intermediate points to produce a more detailed mesh.
     //
-    //#define ABL_BILINEAR_SUBDIVISION
+    //#define ABL_BILINEAR_SUBDIVISION  //E3SKR13 - To be tested
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
       #define BILINEAR_SUBDIVISIONS 3
@@ -1431,9 +1431,9 @@
 
 #if ENABLED(SKEW_CORRECTION) //E3SKR13
   // Input all length measurements here:
-  #define XY_DIAG_AC 282.8427124746 //E3SKR13 141.05 - unmodified = 282.8427124746
-  #define XY_DIAG_BD 282.8427124746 //E3SKR13 141.81 - unmodified = 282.8427124746
-  #define XY_SIDE_AD 200  //E3SKR13 99.99 - unmodified = 200
+  #define XY_DIAG_AC 282.1 //E3SKR13 141.05 - unmodified = 282.8427124746
+  #define XY_DIAG_BD 283.62 //E3SKR13 141.81 - unmodified = 282.8427124746
+  #define XY_SIDE_AD 199.98  //E3SKR13 99.99 - unmodified = 200
 
   // Or, set the default skew factors directly here
   // to override the above measurements:
@@ -1441,11 +1441,11 @@
 
   #define SKEW_CORRECTION_FOR_Z //E3SKR13
   #if ENABLED(SKEW_CORRECTION_FOR_Z)
-    #define XZ_DIAG_AC 282.8427124746 //E3SKR13 141.81 - unmodified = 282.8427124746
-    #define XZ_DIAG_BD 282.8427124746 //E3SKR13 141.22 - unmodified = 282.8427124746
-    #define YZ_DIAG_AC 282.8427124746 //E3SKR13 141.55 - unmodified = 282.8427124746
-    #define YZ_DIAG_BD 282.8427124746 //E3SKR13 141.55 - unmodified = 282.8427124746
-    #define YZ_SIDE_AD 200  //E3SKR13 100.16 - unmodified = 200
+    #define XZ_DIAG_AC 283.5 //E3SKR13 141.75 - unmodified = 282.8427124746
+    #define XZ_DIAG_BD 282.38 //E3SKR13 141.19 - unmodified = 282.8427124746
+    #define YZ_DIAG_AC 283.1 //E3SKR13 141.55 - unmodified = 282.8427124746
+    #define YZ_DIAG_BD 283.1 //E3SKR13 141.55 - unmodified = 282.8427124746
+    #define YZ_SIDE_AD 200.32  //E3SKR13 100.16 - unmodified = 200
     //#define XZ_SKEW_FACTOR 0.0  //E3SKR13 - Commented out
     //#define YZ_SKEW_FACTOR 0.0  //E3SKR13 - Commented out
   #endif
