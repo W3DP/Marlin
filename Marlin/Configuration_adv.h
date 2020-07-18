@@ -1573,7 +1573,7 @@
   #define BABYSTEP_ZPROBE_OFFSET          //E3SKR13 - EZABL - Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
-    #define BABYSTEP_ZPROBE_GFX_OVERLAY   //E3SKR13 - EZABL - To be determined - Enable graphical overlay on Z-offset editor
+    #define BABYSTEP_ZPROBE_GFX_OVERLAY   //E3SKR13 - EZABL - Enable graphical overlay on Z-offset editor
   #endif
 #endif
 
