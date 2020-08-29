@@ -86,7 +86,7 @@
  */
 
 // Show the Marlin bootscreen on startup. ** ENABLE FOR PRODUCTION **
-#define SHOW_BOOTSCREEN //E3SKR13 - Commented out
+#define SHOW_BOOTSCREEN //E3SKR13
 
 // Show the bitmap in Marlin/_Bootscreen.h on startup.
 #define SHOW_CUSTOM_BOOTSCREEN //E3SKR13
@@ -460,7 +460,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 285 //E3SKR13 - Change to 285 when V6 is installed
+#define HEATER_0_MAXTEMP 285 //E3SKR13 - V6 with stock thermistor and heater cartridge
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -489,13 +489,13 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // Creality Ender-3 Pro with stock thermistor
-  #define DEFAULT_Kp 20.65 //E3SKR13
-  #define DEFAULT_Ki 1.86 //E3SKR13
-  #define DEFAULT_Kd 57.20 //E3SKR13
+  //#define DEFAULT_Kp 20.65 //E3SKR13
+  //#define DEFAULT_Ki 1.86 //E3SKR13
+  //#define DEFAULT_Kd 57.20 //E3SKR13
   // Creality Ender-3 Pro with V6 with stock thermistor
-  #define DEFAULT_Kp 33.00 //E3SKR13
-  #define DEFAULT_Ki 3.05 //E3SKR13
-  #define DEFAULT_Kd 89.15 //E3SKR13
+  #define DEFAULT_Kp 17.93 //E3SKR13
+  #define DEFAULT_Ki 1.46 //E3SKR13
+  #define DEFAULT_Kd 54.91 //E3SKR13
 
   // Ultimaker
   //#define DEFAULT_Kp 22.2
@@ -701,7 +701,7 @@
 #define Z_DRIVER_TYPE  TMC2208 //E3SKR13
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE A4988
+#define Z2_DRIVER_TYPE TMC2208 //E3SKR13
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
 #define E0_DRIVER_TYPE TMC2208 //E3SKR13
@@ -759,7 +759,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80.24, 80.37, 401.36, 103 } //E3SKR13 - e-steps for X3D PETG (Stock 80,80,400)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 1600, 103 } //E3SKR13 - e-steps for Stepperonline motors and X3D PETG (Stock 80,80,400)
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1075,7 +1075,7 @@
  */
 #define PROBING_HEATERS_OFF       //E3SKR13 - EZABL - Turn heaters off when probing
 #if ENABLED(PROBING_HEATERS_OFF)
-  #define WAIT_FOR_BED_HEATER     //E3SKR13 - EZABL - Wait for bed to heat back up between probes (to improve accuracy)
+  //#define WAIT_FOR_BED_HEATER     //E3SKR13 - EZABL - Wait for bed to heat back up between probes (to improve accuracy)
 #endif
 #define PROBING_FANS_OFF          // Turn fans off when probing
 #define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
@@ -1105,14 +1105,14 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true //E3SKR13 - Reversed for TMC2208
-#define INVERT_Y_DIR true //E3SKR13 - Reversed for TMC2208
-#define INVERT_Z_DIR false //E3SKR13 - Reversed for TMC2208
+#define INVERT_X_DIR false //E3SKR13
+#define INVERT_Y_DIR false //E3SKR13
+#define INVERT_Z_DIR true //E3SKR13
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR true //E3SKR13 - Reversed for TMC2208
+#define INVERT_E0_DIR false //E3SKR13
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1150,7 +1150,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS 248 //E3SKR13
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 250 //E3SKR13 - To be determined
+#define Z_MAX_POS 350 //E3SKR13
 
 /**
  * Software Endstops
@@ -1289,8 +1289,8 @@
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
-    #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-    #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_HOTEND_TEMP  238    // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_BED_TEMP      90    // (°C) Default bed temperature for the G26 Mesh Validation Tool.
     #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
     #define G26_RETRACT_MULTIPLIER   1.0  // G26 Q (retraction) used by default between mesh test elements.
   #endif
@@ -1300,7 +1300,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5 //E3SKR13 - EZABL
+  #define GRID_MAX_POINTS_X 3 //E3SKR13 - EZABL - Unchanged
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X //E3SKR13 - EZABL - Unchanged
 
   // Probe along the Y axis, advancing X after each column
@@ -1332,7 +1332,7 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
+  #define MESH_INSET 20              // Set Mesh bounds as an inset region of the bed
   #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
@@ -1392,7 +1392,7 @@
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
 //#define MANUAL_X_HOME_POS 0
-#define MANUAL_Y_HOME_POS -9 //E3SKR13 - Y offset for Hero Me Gen 5 - TBC
+#define MANUAL_Y_HOME_POS -9 //E3SKR13 - Y offset for Hero Me Gen 5
 //#define MANUAL_Z_HOME_POS 0
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
@@ -1448,7 +1448,7 @@
  *    +-------------->X     +-------------->X     +-------------->Y
  *     XY_SKEW_FACTOR        XZ_SKEW_FACTOR        YZ_SKEW_FACTOR
  */
-#define SKEW_CORRECTION
+//#define SKEW_CORRECTION
 
 #if ENABLED(SKEW_CORRECTION) //E3SKR13
   // Input all length measurements here:
@@ -1527,8 +1527,8 @@
 #define PREHEAT_1_FAN_SPEED   0 //E3SKR13 - Changed from 255 to 0 - Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "PETG"
-#define PREHEAT_2_TEMP_HOTEND 235
-#define PREHEAT_2_TEMP_BED     85
+#define PREHEAT_2_TEMP_HOTEND 238
+#define PREHEAT_2_TEMP_BED     90
 #define PREHEAT_2_FAN_SPEED   0 //E3SKR13 - Changed from 255 to 0 - Value from 0 to 255
 
 /**

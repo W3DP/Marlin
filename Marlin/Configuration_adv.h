@@ -190,14 +190,14 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD        15 //E3SKR13 - Changed from 20 to 15 - Seconds
-  #define THERMAL_PROTECTION_BED_HYSTERESIS     4 //E3SKR13 - Changed from 2 to 4 - Degrees Celsius
+  #define THERMAL_PROTECTION_BED_PERIOD 20 //E3SKR13 - To be tested - Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 2 //E3SKR13 - To be tested - Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD                15 //E3SKR13 - Changed from 60 to 15 - Seconds
-  #define WATCH_BED_TEMP_INCREASE               2 // Degrees Celsius
+  #define WATCH_BED_TEMP_PERIOD 60 //E3SKR13 - to be tested - Seconds
+  #define WATCH_BED_TEMP_INCREASE 2 // Degrees Celsius
 #endif
 
 /**
@@ -549,7 +549,7 @@
 //
 // For Z set the number of stepper drivers
 //
-#define NUM_Z_STEPPER_DRIVERS 1   // (1-4) Z options change based on how many
+#define NUM_Z_STEPPER_DRIVERS 2   // (1-4) Z options change based on how many
 
 #if NUM_Z_STEPPER_DRIVERS > 1
   //#define Z_MULTI_ENDSTOPS
@@ -713,12 +713,12 @@
  * Z Steppers Auto-Alignment
  * Add the G34 command to align multiple Z steppers using a bed probe.
  */
-//#define Z_STEPPER_AUTO_ALIGN
+#define Z_STEPPER_AUTO_ALIGN
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
   // Define probe X and Y positions for Z1, Z2 [, Z3 [, Z4]]
   // If not defined, probe limits will be used.
   // Override with 'M422 S<index> X<pos> Y<pos>'
-  //#define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
+  #define Z_STEPPER_ALIGN_XY { { 45, 117.5 }, { 190,  117.5 } } //E3SKR13 - Removed Z3 position (), { 290, 290 })
 
   /**
    * Orientation for the automatically-calculated probe positions.
@@ -2229,7 +2229,7 @@
   #define INTERPOLATE       true  //E3SKR13 - Set to false if using 256 native? - Interpolate X/Y/Z_MICROSTEPS to 256
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       760        //E3SKR13 - For stock stepper - (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       810 //E3SKR13 - For Stepperonline motor (17HM15-0904S) -  Calculated 810 (original 580) - (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16    // 0..256
     #define X_RSENSE          0.11
@@ -2245,7 +2245,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       760 //E3SKR13 - For stock stepper
+    #define Y_CURRENT       810 //E3SKR13 - For Stepperonline motor (17HM15-0904S) - Calculated 810 (original 580)
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
@@ -2261,7 +2261,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       760 //E3SKR13 - For stock stepper
+    #define Z_CURRENT       1000 //E3SKR13 - For Stepperonline motor (17HS13-1334S) - Calculated 1200 (original 580)
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -2269,7 +2269,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      800
+    #define Z2_CURRENT      1000 //E3SKR13 - For Stepperonline motor (17HS13-1334S) - Calculated 1200 (original 580)
     #define Z2_CURRENT_HOME Z2_CURRENT
     #define Z2_MICROSTEPS    16
     #define Z2_RSENSE         0.11
@@ -2293,7 +2293,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      900 //E3SKR13 - For stock stepper and Stepperonline pancake motor
+    #define E0_CURRENT      900 //E3SKR13 - For Stepperonline pancake motor (17HS08-1004S). Calculated 900 (original 650)
     #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
